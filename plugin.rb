@@ -28,6 +28,7 @@ after_initialize do
       raise Discourse::NotFound if params[:path] !~ /^[a-z_\-\/]+$/
 		uri = URI('#{:website}/u/by-external/#{params[:id]}.json')
 		req = Net::HTTP::Get.new(uri)
+		puts "website-miles #{:website} | apikey #{:api_key}"
 		req['Api-Key'] = '#{:api_key}'
 		req['Api-Username'] = 'system'
                 req_options = {
@@ -37,6 +38,7 @@ after_initialize do
                   response = http.request(req)
                   obj = JSON.parse(response.body)
                   objId = obj['user']['id']
+				  puts "website-miles-obj-id #{objId}"
                   user = User.find_by(id: objId)
       raise Discourse::NotFound unless user
 
