@@ -1,4 +1,4 @@
-# name: discourse-user-by-ss-external-id
+# name: discourse-user-by-sso-external-id
 # about: Supports linking to user pages by their user id instead of just username
 # version: 1.0
 # authors: Wilson29thID <wilson@29th.org>
@@ -8,7 +8,7 @@ require 'json'
 
 
 enabled_site_setting :user_by_id_enabled
-PLUGIN_NAME ||= 'discourse_user_by_id'.freeze
+PLUGIN_NAME ||= 'discourse_user_by_sso_external'.freeze
 
 after_initialize do
   module ::DiscourseUserById
