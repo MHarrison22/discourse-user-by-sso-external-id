@@ -1,8 +1,8 @@
-# name: discourse-user-by-id
+# name: discourse-user-by-ss-external-id
 # about: Supports linking to user pages by their user id instead of just username
 # version: 1.0
 # authors: Wilson29thID <wilson@29th.org>
-# url: https://github.com/29th/discourse-user-by-id
+# url: https://github.com/MHarrison22/discourse-user-by-sso-external-id
 require 'net/http'
 require 'json'
 
