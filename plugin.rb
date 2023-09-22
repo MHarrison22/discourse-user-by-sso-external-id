@@ -25,10 +25,11 @@ after_initialize do
     after_action :add_noindex_header, only: [:show_by_id]
 
     def show_by_id
+			puts "website-miles #{:website} | apikey #{:api_key}"
       raise Discourse::NotFound if params[:path] !~ /^[a-z_\-\/]+$/
 		uri = URI('#{:website}/u/by-external/#{params[:id]}.json')
 		req = Net::HTTP::Get.new(uri)
-		puts "website-miles #{:website} | apikey #{:api_key}"
+
 		req['Api-Key'] = '#{:api_key}'
 		req['Api-Username'] = 'system'
                 req_options = {
