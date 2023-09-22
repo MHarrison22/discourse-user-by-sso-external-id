@@ -30,16 +30,20 @@ after_initialize do
 		req = Net::HTTP::Get.new(uri)
 		req['Api-Key'] = '#{:api_key}'
 		req['Api-Username'] = 'system'
-		res = Net::HTTP.start(uri.hostname, uri.port) 
-        response = http.request(req)
-		obj = JSON.parse(response.body)
-		objId = obj['user']['id']
-      user = User.find_by(id: objId)
+                req_options = {
+                  use_ssl: uri.scheme == 'https'
+                }
+		res = Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
+                  response = http.request(req)
+                  obj = JSON.parse(response.body)
+                  objId = obj['user']['id']
+                  user = User.find_by(id: objId)
       raise Discourse::NotFound unless user
 
       guardian.ensure_can_see!(user)
 
       redirect_to(path("/u/#{user.encoded_username}/#{params[:path]}"))
+                end
 
     end
   end
