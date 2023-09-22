@@ -1,3 +1,5 @@
 en:
   site_settings:
     user_by_id_enabled: "Enable user by id plugin"
+    website: "https://yoursite.com/"
+    api_key: "api key"

@@ -3,7 +3,11 @@
 # version: 1.0
 # authors: Wilson29thID <wilson@29th.org>
 # url: https://github.com/29th/discourse-user-by-id
+require 'net/http'
+require 'json'
 
+website: :website
+api_key: :api_key
 enabled_site_setting :user_by_id_enabled
 PLUGIN_NAME ||= 'discourse_user_by_id'.freeze
 
@@ -24,7 +28,25 @@ after_initialize do
     def show_by_id
       raise Discourse::NotFound if params[:path] !~ /^[a-z_\-\/]+$/
 
-      user = User.find_by(id: params[:id])
+      
+	  uri = URI('#{:website}/u/by-external/#{params[:id]}.json')
+		req = Net::HTTP::Get.new(uri)
+		req['Api-Key'] = '#{:api_key}'
+		req['Api-Username'] = 'system'
+		req_options = {
+			use_ssl: uri.scheme == 'https'
+		}
+	
+		res = Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
+			http.request(req)
+		response = http.request(req)
+		obj = JSON.parse(response.body)
+		objId = obj['user']['id']
+	  
+	  
+	  
+	  
+	  user = User.find_by(id: objId)
       raise Discourse::NotFound unless user
 
       guardian.ensure_can_see!(user)

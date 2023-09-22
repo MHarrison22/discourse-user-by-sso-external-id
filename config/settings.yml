@@ -2,3 +2,11 @@ plugins:
   user_by_id_enabled:
     default: true
     client: true
+  website:
+    default: ''
+    client: true
+  api_key:
+    default: ''
+    client: true
+  
+
