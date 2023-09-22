@@ -6,8 +6,7 @@
 require 'net/http'
 require 'json'
 
-website: :website
-api_key: :api_key
+
 enabled_site_setting :user_by_id_enabled
 PLUGIN_NAME ||= 'discourse_user_by_id'.freeze
 
@@ -27,31 +26,21 @@ after_initialize do
 
     def show_by_id
       raise Discourse::NotFound if params[:path] !~ /^[a-z_\-\/]+$/
-
-      
-	  uri = URI('#{:website}/u/by-external/#{params[:id]}.json')
+		uri = URI('#{:website}/u/by-external/#{params[:id]}.json')
 		req = Net::HTTP::Get.new(uri)
 		req['Api-Key'] = '#{:api_key}'
 		req['Api-Username'] = 'system'
-		req_options = {
-			use_ssl: uri.scheme == 'https'
-		}
-	
-		res = Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
-			http.request(req)
-		response = http.request(req)
+		res = Net::HTTP.start(uri.hostname, uri.port) 
+        response = http.request(req)
 		obj = JSON.parse(response.body)
 		objId = obj['user']['id']
-	  
-	  
-	  
-	  
-	  user = User.find_by(id: objId)
+      user = User.find_by(id: objId)
       raise Discourse::NotFound unless user
 
       guardian.ensure_can_see!(user)
 
       redirect_to(path("/u/#{user.encoded_username}/#{params[:path]}"))
+
     end
   end
 
