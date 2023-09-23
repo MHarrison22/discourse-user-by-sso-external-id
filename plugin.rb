@@ -31,17 +31,22 @@ puts "externalsso api #{SiteSetting.user_by_external_sso_api_key}"
     def show_by_id
 			puts "website-miles #{SiteSetting.user_by_external_sso_website} | apikey #{SiteSetting.user_by_external_sso_api_key}"
       #raise Discourse::NotFound if params[:path] !~ /^[a-z_\-\/]+$/
+	  puts "uriparser #{SiteSetting.user_by_external_sso_website}/u/by-external/#{params[:id]}.json" 
 		uri = URI.parse("#{SiteSetting.user_by_external_sso_website}/u/by-external/#{params[:id]}.json")
 		req = Net::HTTP::Get.new(uri)
+		puts "afterurireq"
 
 		req['Api-Key'] = "#{SiteSetting.user_by_external_sso_api_key}"
 		req['Api-Username'] = "system"
                 req_options = {
                   use_ssl: uri.scheme == 'https'
                 }
+				puts "test123"
 		res = Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
                   response = http.request(req)
+				  puts "test234"
                   obj = JSON.parse(response.body)
+				  puts "#{response.body}"
                   objId = obj['user']['id']
 				  puts "website-miles-obj-id #{objId}"
                   user = User.find_by(id: objId)
