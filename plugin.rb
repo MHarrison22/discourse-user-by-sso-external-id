@@ -56,7 +56,7 @@ puts "externalsso api #{SiteSetting.user_by_external_sso_api_key}"
   end
 
   DiscourseUserById::Engine.routes.draw do
-    get "/:id/*path" => "users#show_by_id", constraints: { id: /\d+/ }
+    get "/:id/*path" => "users#show_by_id"
   end
 
   ::Discourse::Application.routes.append do
