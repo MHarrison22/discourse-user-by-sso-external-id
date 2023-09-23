@@ -8,10 +8,12 @@ require 'json'
 
 
 enabled_site_setting :user_by_external_sso_enabled
-PLUGIN_NAME ||= 'discourse_user_by_sso_external'.freeze
+PLUGIN_NAME ||= 'discourse_user_by_sso_external_id'.freeze
 
 after_initialize do
 puts "miles-plugin-init"
+puts "sitesetting #{:user_by_external_sso_enabled}"
+puts "stringsetting #{enabled_site_setting}"
   module ::DiscourseUserById
     class Engine < ::Rails::Engine
       engine_name PLUGIN_NAME
@@ -27,7 +29,7 @@ puts "miles-plugin-init"
 
     def show_by_id
 			puts "website-miles #{:user_by_external_sso_website} | apikey #{:user_by_external_sso_api_key}"
-      raise Discourse::NotFound if params[:path] !~ /^[a-z_\-\/]+$/
+      #raise Discourse::NotFound if params[:path] !~ /^[a-z_\-\/]+$/
 		uri = URI('#{:user_by_external_sso_website}/u/by-external/#{params[:id]}.json')
 		req = Net::HTTP::Get.new(uri)
 
