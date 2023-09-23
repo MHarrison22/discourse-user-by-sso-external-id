@@ -12,8 +12,9 @@ PLUGIN_NAME ||= 'discourse_user_by_sso_external_id'.freeze
 
 after_initialize do
 puts "miles-plugin-init"
-puts "sitesetting #{:user_by_external_sso_enabled}"
-puts "stringsetting #{enabled_site_setting}"
+puts "externalsso web #{SiteSetting.user_by_external_sso_website}"
+puts "externalsso api #{SiteSetting.user_by_external_sso_api_key}"
+
   module ::DiscourseUserById
     class Engine < ::Rails::Engine
       engine_name PLUGIN_NAME
@@ -28,12 +29,12 @@ puts "stringsetting #{enabled_site_setting}"
     after_action :add_noindex_header, only: [:show_by_id]
 
     def show_by_id
-			puts "website-miles #{:user_by_external_sso_website} | apikey #{:user_by_external_sso_api_key}"
+			puts "website-miles #{SiteSetting.user_by_external_sso_website} | apikey #{SiteSetting.user_by_external_sso_api_key}"
       #raise Discourse::NotFound if params[:path] !~ /^[a-z_\-\/]+$/
-		uri = URI('#{:user_by_external_sso_website}/u/by-external/#{params[:id]}.json')
+		uri = URI('#{SiteSetting.user_by_external_sso_website}/u/by-external/#{params[:id]}.json')
 		req = Net::HTTP::Get.new(uri)
 
-		req['Api-Key'] = '#{:user_by_external_sso_api_key}'
+		req['Api-Key'] = '#{SiteSetting.user_by_external_sso_api_key}'
 		req['Api-Username'] = 'system'
                 req_options = {
                   use_ssl: uri.scheme == 'https'
