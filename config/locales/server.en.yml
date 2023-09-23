@@ -1,5 +1,5 @@
 en:
   site_settings:
-    user_by_id_enabled: "Enable user by id plugin"
-    website: "https://yoursite.com/"
-    api_key: "api key"
+    user_by_external_sso_enabled: "Enable user by external sso plugin"
+    user_by_external_sso_website: "https://yoursite.com/"
+    user_by_external_sso_api_key: "api key"

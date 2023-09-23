@@ -1,11 +1,11 @@
 plugins:
-  user_by_id_enabled:
+  user_by_external_sso_enabled:
     default: true
     client: true
-  website:
+  user_by_external_sso_website:
     default: ''
     client: true
-  api_key:
+  user_by_external_sso_api_key:
     default: ''
     client: true
   

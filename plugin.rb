@@ -7,10 +7,11 @@ require 'net/http'
 require 'json'
 
 
-enabled_site_setting :user_by_id_enabled
+enabled_site_setting :user_by_external_sso_enabled
 PLUGIN_NAME ||= 'discourse_user_by_sso_external'.freeze
 
 after_initialize do
+puts "miles-plugin-init"
   module ::DiscourseUserById
     class Engine < ::Rails::Engine
       engine_name PLUGIN_NAME
