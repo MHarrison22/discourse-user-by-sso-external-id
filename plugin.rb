@@ -26,12 +26,12 @@ puts "miles-plugin-init"
     after_action :add_noindex_header, only: [:show_by_id]
 
     def show_by_id
-			puts "website-miles #{:website} | apikey #{:api_key}"
+			puts "website-miles #{:user_by_external_sso_website} | apikey #{:user_by_external_sso_api_key}"
       raise Discourse::NotFound if params[:path] !~ /^[a-z_\-\/]+$/
-		uri = URI('#{:website}/u/by-external/#{params[:id]}.json')
+		uri = URI('#{:user_by_external_sso_website}/u/by-external/#{params[:id]}.json')
 		req = Net::HTTP::Get.new(uri)
 
-		req['Api-Key'] = '#{:api_key}'
+		req['Api-Key'] = '#{:user_by_external_sso_api_key}'
 		req['Api-Username'] = 'system'
                 req_options = {
                   use_ssl: uri.scheme == 'https'
