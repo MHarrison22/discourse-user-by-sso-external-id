@@ -54,7 +54,7 @@ puts "externalsso api #{SiteSetting.user_by_external_sso_api_key}"
 
       guardian.ensure_can_see!(user)
 
-      redirect_to(path("/u/#{user.encoded_username}/#{params[:path]}"))
+      redirect_to(path("/u/#{user.username}/#{params[:path]}"))
                 end
 
     end
