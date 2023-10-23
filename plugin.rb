@@ -45,7 +45,7 @@ puts "externalsso api #{SiteSetting.user_by_external_sso_api_key}"
 		res = Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
                   response = http.request(req)
 				  puts "test234"
-                  var responseForceEnc = response.body.force_encoding('UTF-8') 
+                  responseForceEnc = response.body.force_encoding('UTF-8') 
                   obj = JSON.parse(responseForceEnc)
 				  puts "#{responseForceEnc}"
                   objId = obj['user']['id']
